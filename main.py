@@ -1,20 +1,13 @@
 import logging
-import os
-
 from handlers.index import *
-from dotenv import load_dotenv
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import executor
 from db.index import *
+from bot_connections import dp
 
-load_dotenv() # Loading .env
 
 logging.basicConfig(level=logging.INFO) # Setting configuration
 
-TOKEN = os.getenv("TOKEN")
-bot = Bot(token=TOKEN)
-dp = Dispatcher(bot)
-
-connect_db() # Connection to database
+# connect_db() # Connection to database
 create_handlers(dp) # Initializing all handlers
 
 if __name__ == "__main__": # Starting long polling
