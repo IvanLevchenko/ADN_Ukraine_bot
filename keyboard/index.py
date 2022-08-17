@@ -7,14 +7,16 @@ keyboard.row(
 )
 
 
-kb_client = ReplyKeyboardMarkup(resize_keyboard=True)   
-kb_client.row(KeyboardButton('register_user'), 
-              KeyboardButton('catalog')
+context_menu_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)   
+context_menu_keyboard.row( 
+    KeyboardButton('register_user'), 
+    KeyboardButton('catalog')
 )
 
 
-kb_start_lang = InlineKeyboardMarkup(row_width=3)
-kb_start_lang.row(InlineKeyboardButton(text='UA🇺🇦', callback_data="sss"), 
-             InlineKeyboardButton(text='RU🇷🇺', callback_data="sss"), 
-             InlineKeyboardButton(text='EN🇺🇸', callback_data="sss")
+language_pick_keyboard = InlineKeyboardMarkup(row_width=3)
+language_pick_keyboard.row(
+    InlineKeyboardButton(text='UA🇺🇦', callback_data="set_localisation_ua"), 
+    InlineKeyboardButton(text='RU🇷🇺', callback_data="set_localisation_ru"), 
+    InlineKeyboardButton(text='EN🇺🇸', callback_data="set_localisation_en")
 )
