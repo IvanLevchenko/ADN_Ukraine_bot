@@ -53,4 +53,4 @@ async def register_user_second_name(msg: types.Message, state: FSMContext):
     await state.finish()
 
 async def catalog(msg: types.Message):
-    await msg.reply("ТЫ гейская скотина")
+    await msg.reply("testovik")
