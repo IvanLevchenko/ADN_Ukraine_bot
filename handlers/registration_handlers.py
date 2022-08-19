@@ -4,6 +4,7 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext
 from bot_connection import bot, dp
+from db.api import insert_user
 
 # state
 class Registration_Form(StatesGroup):
@@ -47,6 +48,12 @@ async def register_user_surname(msg: types.Message, state: FSMContext):
 async def register_user_email(msg: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['email'] = msg.text
+        insert_user({
+            'name': data['name'],
+            'surname': data['surname'],
+            'phone': data['phone'],
+            'email': data['email']
+        })
         await msg.answer(
             "Name: %s \nSurname: %s \nPhone: %s \nEmail: %s"
             % (data['name'], data['surname'], data['phone'], data['email'])
