@@ -34,6 +34,7 @@ async def register_user_phone(msg: types.Message, state: FSMContext):
 # getting a name
 async def register_user_name(msg: types.Message, state: FSMContext):
     async with state.proxy() as data:
+        global registration_valid_keyboard_edit_state
         data['name'] = msg.text
         if registration_valid_keyboard_edit_state == False:
             await Registration_Form.next()
@@ -73,6 +74,7 @@ async def registration_valid_keyboard_confirm(callback: types.CallbackQuery):
 
 @dp.callback_query_handler(text='registration_valid_keyboard_edit')
 async def registration_valid_keyboard_edit(callback: types.CallbackQuery):
+    global registration_valid_keyboard_edit_state
     registration_valid_keyboard_edit_state = True
     await callback.message.answer(
         'choose what you need',
