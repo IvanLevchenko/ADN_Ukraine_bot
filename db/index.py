@@ -13,7 +13,16 @@ def connect_db():
             host=os.getenv("DB_HOST"),
         )
         cursor = connection.cursor()
-        connection.close()
+
+        # cursor.execute("DROP TABLE users")
+        cursor.execute(
+            "CREATE TABLE IF NOT EXISTS users " +
+            "(id SERIAL PRIMARY KEY, name TEXT, surname TEXT, email TEXT UNIQUE, phone TEXT UNIQUE)"
+        )
+
+        # cursor.close()
+        # connection.close()
+        return connection
     except Exception as error:
         print(f"Connection error: {error}")
 
