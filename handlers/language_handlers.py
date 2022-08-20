@@ -15,3 +15,4 @@ async def set_language(callback: types.CallbackQuery):
         output_msg = "language has been set"
 
     await callback.message.answer(output_msg, reply_markup=initial_keyboard)
+    await callback.answer()
