@@ -53,12 +53,6 @@ async def register_user_email(msg: types.Message, state: FSMContext):
         email_regexp = re.match("((^[a-zA-Z0-9]+)(([_]?)|([.]|[-])?[a-zA-Z0-9]+)*@([a-zA-Z0-9]+)(([_]?)|([.]|[-])?[a-zA-Z0-9]+)*\.[a-zA-Z0-9]{2,}$)", msg.text)
         if email_regexp:
             data['email'] = msg.text
-            insert_user({
-                'name': data['name'],
-                'surname': data['surname'],
-                'phone': data['phone'],
-                'email': data['email']
-            })
             await msg.answer(
                 "Name: %s \nSurname: %s \nPhone: %s \nEmail: %s"
                 % (data['name'], data['surname'], data['phone'], data['email']),
@@ -69,16 +63,21 @@ async def register_user_email(msg: types.Message, state: FSMContext):
             await bot.send_message(msg.from_user.id, 'enter valid email')
             await Registration_Form.email.set()
 
+
 # Edit/Confirm registration info
-async def register_ending(callback: types.CallbackQuery):
-    state = callback.data.split("=")[1]
-    output_msg = ""
-    if state == "confirm":
-        output_msg = "CONGRATULATIONS"
-        await callback.message.answer(output_msg)
-    else: 
-        output_msg = "What will we edit?"
-        await callback.message.answer(output_msg, reply_markup=registration_edit_keyboard)
+async def register_ending(callback: types.CallbackQuery, state: FSMContext):
+    state_valid = callback.data.split("=")[1]
+    async with state.proxy() as data:
+        if state_valid == "confirm":
+            insert_user({
+            'name': data['name'],
+            'surname': data['surname'],
+            'phone': data['phone'],
+            'email': data['email']
+        })
+            await callback.message.answer("CONGRATULATIONS")
+        else: 
+            await callback.message.answer("What will we edit?", reply_markup=registration_edit_keyboard)
     
     await callback.answer()
 
@@ -88,17 +87,17 @@ async def register_info_edit(callback: types.CallbackQuery):
     global edit_state
     if edit == "name":
         edit_state = True
-        Registration_Form.name.set()
+        await Registration_Form.name.set()
     elif edit == "surname":
         edit_state = True
-        Registration_Form.surname.set()
+        await Registration_Form.surname.set()
     elif edit == "phone":
         edit_state = True
-        Registration_Form.phone.set()
+        await Registration_Form.phone.set()
     elif edit == "email":
-        edit_state = True
-        Registration_Form.email.set()
+        await Registration_Form.email.set()
+        await callback.reply('enter email')
     else:
-        Registration_Form.phone.set()
+        await Registration_Form.phone.set()
 
     await callback.answer()
