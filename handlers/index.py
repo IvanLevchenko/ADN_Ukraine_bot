@@ -1,6 +1,6 @@
 from aiogram.dispatcher.filters import Text
 from db.api import *
-from handlers.catalogue_handlers import *
+from handlers.products_handlers import *
 from handlers.language_handlers import *
 from handlers.registration_handlers import *
 from handlers.registration_handlers import Registration_Form
@@ -15,9 +15,22 @@ def create_handlers(dp: Dispatcher):
     dp.register_message_handler(register_user_surname, state=Registration_Form.surname)
     dp.register_message_handler(register_user_email, state=Registration_Form.email)
     # Registration confirm/edit
-    dp.register_callback_query_handler(register_ending, Text(equals=["registration_valid_keyboard=confirm", "registration_valid_keyboard=edit"]))
-    dp.register_callback_query_handler(register_info_edit, Text(equals=["registration_edit_keyboard=name", "registration_edit_keyboard=surname","registration_edit_keyboard=all" 
-                                                                        "registration_edit_keyboard=phone", "registration_edit_keyboard=email"]))
+    dp.register_callback_query_handler(
+        register_ending,
+        Text(equals=["registration_valid_keyboard=confirm", "registration_valid_keyboard=edit"])
+    )
+    dp.register_callback_query_handler(
+        register_info_edit,
+        Text(
+            equals=[
+                "registration_edit_keyboard=name",
+                "registration_edit_keyboard=surname",
+                "registration_edit_keyboard=all",
+                "registration_edit_keyboard=phone",
+                "registration_edit_keyboard=email"
+            ]
+        )
+    )
     # Catalogue
     dp.register_message_handler(open_catalogue, Text(equals="catalogue"))
     # Language

@@ -10,7 +10,7 @@ from aiogram.types import (
 initial_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
 initial_keyboard.row(
     KeyboardButton('register_user'), 
-    KeyboardButton('catalogue')
+    KeyboardButton('products')
 )
 
 # Keyboard with languages

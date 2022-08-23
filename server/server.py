@@ -1,21 +1,23 @@
 import os.path
 
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask import request
-from db.api import insert_product
+from db.api import insert_product, get_products
 
-def get_server_app():
-    app = Flask(__name__)
-    CORS(app)
+app = Flask(__name__)
+CORS(app)
 
-    API_URL = "/api/v1/"
-    app.config["UPLOAD_FOLDER"] = "/upload/"
-    return app
+API_URL = "/api/v1/"
+app.config["UPLOAD_FOLDER"] = "/upload/"
+
+@app.route(f"{API_URL}upload/<image>")
+def get_image(image):
+    return send_from_directory("../upload/", image, as_attachment=True)
 
 @app.route(API_URL + "get-products")
 def get_products_controller():
-    return {"Hello": "123"}
+    return get_products()
 
 @app.post(API_URL + "create-product")
 def create_product_controller():
@@ -28,9 +30,12 @@ def create_product_controller():
         "description": body["description"],
         "image": f"/upload/{image.filename}"
     }
-
-    insert_product(product)
-    return {"DAD": "DADA"}
+    status = "Success"
+    try:
+        insert_product(product)
+    except:
+        status = "Error"
+    return {"Staus": status}
 
 
 if __name__ == "__main__":

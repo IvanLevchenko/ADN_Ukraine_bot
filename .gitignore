@@ -4,3 +4,9 @@ venv
 __pycache__
 web_events/interface/node_modules
 web_events/interface/public
+web_events/admin_page/node_modules
+web_events/admin_page/public
+web_events/node_modules
+web_events/build
+web_events/public
+upload

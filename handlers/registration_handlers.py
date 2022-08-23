@@ -96,8 +96,8 @@ async def register_info_edit(callback: types.CallbackQuery):
         await Registration_Form.phone.set()
     elif edit == "email":
         await Registration_Form.email.set()
-        await callback.reply('enter email')
-    else:
-        await Registration_Form.phone.set()
+        await callback.answer('enter email')
+    # else:
+    #     await Registration_Form.phone.set()
 
     await callback.answer()

@@ -1,10 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import {default as Form} from '../CreateForm/CreateForm'
-import Products from '../Products/Products'
+import {default as Form} from '../AdminForm/AdminForm'
+import Products from '../AdminProducts/AdminProducts'
 
-export default function Home() {
+export default function AdminPage() {
   return (
     <div className="container mt-5">
       <Tabs defaultActiveKey="products">
