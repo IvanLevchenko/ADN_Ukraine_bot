@@ -5,8 +5,8 @@ def insert_user(user):
     connection = connect_db()
     cursor = connection.cursor()
     cursor.execute(
-        "INSERT INTO users (name, surname, email, phone) VALUES (%s, %s, %s, %s)",
-        (user["name"], user["surname"], user["email"], user["phone"])
+        "INSERT INTO users (name, surname, email, phone, lang, userid) VALUES (%s, %s, %s, %s, %s, %s )",
+        (user["name"], user["surname"], user["email"], user["phone"], user["lang"], user["userid"])
     )
     connection.commit()
     get_users()
