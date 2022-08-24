@@ -1,7 +1,8 @@
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-
-import { createProduct } from '../../api/api'
+import {useEffect, useState, useRef} from "react"
+import Form from "react-bootstrap/Form"
+import Button from "react-bootstrap/Button"
+import {useParams} from "react-router-dom"
+import { createProduct, getProduct } from "../../api/api"
 
 export default function AdminForm() {
 
@@ -17,11 +18,30 @@ export default function AdminForm() {
         formData.append(element.id, element.value)
       }
     })
-    createProduct(formData)
+    createProduct(formData).then(response => alert(response.data.status))
+    e.target.reset()
+  }
+  const params = useParams()
+  const form = useRef()
+  const [isEditMode] = useState(!!params.id)
+
+  const fillForm = (product) => {
+    Array.from(form.current.elements).forEach(field => {
+        console.log(field)
+      if (field.id !== "image" && field.id) {
+        field.value = product[field.id]
+      }
+    })
   }
 
+  useEffect(() => {
+    if (isEditMode) {
+      getProduct(params.id).then(response => fillForm(response.data))
+    }
+  }, [])
+
   return (
-    <Form className="w-50 mt-5 m-auto" onSubmit={handleSubmit}>
+    <Form className="w-50 mt-5 m-auto" onSubmit={handleSubmit} ref={form}>
       <Form.Group className="mb-3" controlId="name">
         <Form.Control
           required
@@ -45,6 +65,7 @@ export default function AdminForm() {
            max={1}
            type="file"
         />
+      {isEditMode ? <img src="" id="preview-edit-image" /> : <></>}
       </Form.Group>
       <Button variant="primary" type="submit">
         Create

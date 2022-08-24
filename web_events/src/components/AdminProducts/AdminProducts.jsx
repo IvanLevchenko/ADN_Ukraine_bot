@@ -1,18 +1,14 @@
 import {useState, useEffect} from "react"
 import {getProducts} from "../../api/api"
-import Product from "../AdminProduct/AdminProduct"
+import {useSelector} from "react-redux"
+import AdminProduct from "../AdminProduct/AdminProduct"
 
 export default function AdminProducts() {
-
-  const [products, setProducts] = useState([])
-
-  useEffect(() => {
-    getProducts().then(response => setProducts(response.data))
-  }, [])
+  const products = useSelector(state => state.products.products)
 
   return (
-    <div className="products-wrapper .container-fluid border mt-1 w-25">
-      {products.map(prod => <Product key={prod.name} {...prod}/>)}
+    <div className="products-wrapper .container-fluid d-flex justify-content-around mt-1">
+      {products.map(prod => <AdminProduct key={prod.id} {...prod}/>)}
     </div>
   )
 }

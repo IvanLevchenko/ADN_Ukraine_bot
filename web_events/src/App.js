@@ -5,6 +5,7 @@ import {useSelector} from "react-redux"
 import {getProducts} from "./api/api"
 import WebApp from "./components/WebApp/WebApp"
 import AdminPage from "./components/AdminPage/AdminPage"
+import AdminForm from "./components/AdminForm/AdminForm"
 
 function App() {
   const productsSelector = useSelector(state => state.products.products)
@@ -19,7 +20,6 @@ function App() {
   function init(telegram) {
     telegram.WebApp.ready()
     telegram.WebApp.MainButton.isVisible = true
-    console.log(telegram)
   }
 
   return (
@@ -27,6 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<WebApp />} />
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/edit/product/:id" element={<AdminForm />} />
       </Routes>
 
     </div>

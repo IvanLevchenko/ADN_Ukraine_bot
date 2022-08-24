@@ -25,7 +25,7 @@ def connect_db():
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS products (id SERIAL PRIMARY KEY, name TEXT UNIQUE, description TEXT, img TEXT)"
         )
-
+        connection.commit()
         # cursor.close()
         # connection.close()
         return connection
