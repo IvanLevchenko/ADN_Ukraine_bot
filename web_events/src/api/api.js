@@ -2,6 +2,8 @@ import axios from "axios"
 import store from "../store/store"
 import {setProductsAction} from "../store/features/slices/productSlice"
 
+const token = localStorage.getItem("token")
+
 const _axios = axios.create(
   {baseURL: store.getState().server.serverURL}
 )
@@ -26,7 +28,17 @@ export const getProduct = async (id) => {
 export const createProduct = async (data) => {
     return await _axios.post("/create-product", data, {
         headers: {
-          "Content-type": "multipart/form-data"
+          "Content-type": "multipart/form-data",
+          "Authorization": "Bearer " + token
+        }
+    })
+}
+
+export const editProduct = async (data, id) => {
+    return await _axios.patch("/edit-product?id=" + id, data, {
+        headers: {
+          "Content-type": "multipart/form-data",
+          "Authorization": "Bearer " + token
         }
     })
 }
@@ -34,7 +46,16 @@ export const createProduct = async (data) => {
 export const deleteProduct = async (id) => {
     return await _axios.delete("/delete-product?id=" + id, {
         headers: {
-          "Content-type": "application/json"
+          "Content-type": "application/json",
+          "Authorization": "Bearer " + token
         }
     })
+}
+
+export const loginUser = async (data) => {
+  return await _axios.post("/login-user", data, {
+      headers: {
+        "Content-type": "multipart/form-data"
+      }
+  })
 }

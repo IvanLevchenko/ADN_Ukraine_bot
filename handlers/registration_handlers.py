@@ -83,7 +83,8 @@ async def register_user_email(msg: types.Message, state: FSMContext):
     async with state.proxy() as data:
         email_regexp = re.match(
             "((^[a-zA-Z0-9]+)(([_]?)|([.]|[-])?[a-zA-Z0-9]+)*@([a-zA-Z0-9]+)(([_]?)|([.]|[-])?[a-zA-Z0-9]+)*\.[a-zA-Z0-9]{2,}$)",
-            msg.text)
+            msg.text
+        )
         if email_regexp:
             data['email'] = msg.text
             await get_registration_result(msg, data)
@@ -98,7 +99,7 @@ async def register_user_email(msg: types.Message, state: FSMContext):
 async def register_ending(callback: types.CallbackQuery, state: FSMContext):
     state_valid = callback.data.split("=")[1]
     async with state.proxy() as data:
-        if (state_valid == "confirm") & (any_state['edit_regdat'] == 0):
+        if (state_valid == "confirm") and (any_state['edit_regdat'] == 0):
             insert_user({
                 'name': data['name'],
                 'surname': data['surname'],

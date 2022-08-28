@@ -23,7 +23,7 @@ def connect_db():
             "CREATE TABLE IF NOT EXISTS admins (login TEXT UNIQUE, password TEXT)"
         )
         cursor.execute(
-            "CREATE TABLE IF NOT EXISTS products (id SERIAL PRIMARY KEY, name TEXT UNIQUE, description TEXT, img TEXT)"
+            "CREATE TABLE IF NOT EXISTS products (id SERIAL PRIMARY KEY, name TEXT UNIQUE, description TEXT, image TEXT)"
         )
         connection.commit()
         # cursor.close()
