@@ -5,6 +5,8 @@ from flask import Flask, send_from_directory, make_response, request, Response
 from flask_cors import CORS
 from db.api import *
 from dotenv import load_dotenv
+from waitress import serve
+
 import bcrypt
 
 load_dotenv()
@@ -131,5 +133,4 @@ def edit_product_controller():
 
 
 if __name__ == "__main__":
-    from waitress import serve
     serve(app, host="localhost", port=3001)
