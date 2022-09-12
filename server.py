@@ -1,18 +1,18 @@
 import os
 from traceback import print_tb
 import jwt
-from flask import Flask, send_from_directory, make_response, request, Response
-from flask_cors import CORS
+from flask import Flask, send_from_directory, send_file, request, Response
+from flask_cors import CORS, cross_origin
 from db.api import *
 from dotenv import load_dotenv
-from waitress import serve
+
 
 import bcrypt
 
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources="*")
 
 API_URL = "/api/v1/"
 app.config["UPLOAD_FOLDER"] = "/upload/"
@@ -29,8 +29,17 @@ def check_token(req):
         )
     except:
         print("Authorize error")
-        return False, Response("{'Status':'Anauthorized user'}", status=401, mimetype="application/json")
+        return False, Response("{'Status':'Unauthorized user'}", status=401, mimetype="application/json")
    
+@app.route("/")
+def root():
+    return send_from_directory("static", "index.html")
+
+@app.route("/static/<path>")
+def send_static(path):
+    print("adawd;.a[d.lwa[dla[dla[pwdlw[")
+    return ""
+
 # Users
 @app.post(API_URL + "login-user")
 def login_user_controller():
@@ -60,6 +69,7 @@ def get_image(image):
 
 @app.route(API_URL + "get-products")
 def get_products_controller():
+    print("bebra")
     return get_products()
 
 @app.route(API_URL + "get-product")
@@ -133,4 +143,6 @@ def edit_product_controller():
 
 
 if __name__ == "__main__":
-    serve(app, host="localhost", port=3001)
+    print('serve is started')
+    app.run('0.0.0.0', port=5000)
+    

@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 export const serverSlice = createSlice({
   name: 'server',
   initialState: {
-    serverURL: "http://localhost:3001/api/v1/",
-    // serverURL: "https://effortless-kitsune-c04cd7.netlify.app/api/v1"
+    serverURL: "https://webevents.ddns.net/api/v1",
+    // serverURL: "http://localhost:5000/api/v1"
   },
   reducers: {},
 })
